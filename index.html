@@ -7,6 +7,88 @@
 <title>Northern Light Health</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="styles.css" rel="stylesheet">
+
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #eef2f7;
+    padding: 30px;
+}
+
+.container.chat-routing {
+    max-width: 1000px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: #f9fbff;
+    border: 1px solid #e5e9f2;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 13px;
+    display: block;
+    margin-top: 12px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+}
+
+.output {
+    padding: 15px;
+    border-left: 5px solid #2d6cdf;
+    background: #fff;
+    border-radius: 10px;
+}
+
+.skill {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a3f9f;
+    margin-top: 10px;
+}
+
+.phone {
+    color: #b00020;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.small {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+}
+</style>
+
 <!--NICE CXoneChat Bsic Chat-->
 
 <script>
@@ -163,18 +245,15 @@ select {
 
 
 <div id="lipsum">
-<div class="container customchatrouting">
+<div class="container chat-routing">
 
-<div class="header-box">
-<h1>CXone Chat Routing Configuration Demo</h1>
-<div class="subtitle">Interactive preview of Organization → Practice → Category → Skill routing</div>
-</div>
+<h1>Northern Light Health Precontact Survey Conditions</h1>
+<div class="subtitle">Org → Practice → Category → Skill + Dynamic Phone (Org-based)</div>
 
 <div class="grid">
 
-<!-- LEFT SIDE -->
+<!-- INPUT -->
 <div class="panel">
-<h3>Input Selection</h3>
 
 <label>Organization</label>
 <select id="org" onchange="updatePractice()">
@@ -193,7 +272,7 @@ select {
 
 </div>
 
-<!-- RIGHT SIDE -->
+<!-- OUTPUT -->
 <div class="panel">
 <h3>Routing Output</h3>
 
@@ -209,52 +288,69 @@ Select values to see routing result
 <script>
 
 /* =========================
-   DATA MODEL (CXone Mapping)
+   FULL DATASET (ORGANIZATION → PRACTICE → SKILL)
 ========================= */
 
 const data = {
   "AR Gould": {
-    "Fort Fairfield": { skill: "ARG_Pri_Care_FtFairfield_Chat", phone: "207-111-1001" },
-    "Presque Isle": { skill: "ARG_Pri_Care_PresqueIsle_Chat", phone: "207-111-1002" },
-    "Caribou": { skill: "ARG_Pri_Care_Caribou_Chat", phone: "207-111-1003" },
-    "Women’s Health": { skill: "ARG_Womens_Health_Chat", phone: "207-111-1004" }
+    "Fort Fairfield": "ARG_Pri_Care_FtFairfield_Chat",
+    "Presque Isle": "ARG_Pri_Care_PresqueIsle_Chat",
+    "Caribou": "ARG_Pri_Care_Caribou_Chat",
+    "Women’s Health": "ARG_Womens_Health_Chat"
   },
 
   "Blue Hill": {
-    "Blue Hill": { skill: "BHH_BlueHill_Chat", phone: "207-222-2001" }
+    "Blue Hill": "BHH_BlueHill_Chat"
   },
 
   "CA Dean": {
-    "Greenville": { skill: "CAD_Greenville_Chat", phone: "207-333-3001" },
-    "Monson": { skill: "CAD_Monson_Chat", phone: "207-333-3002" },
-    "Sangerville": { skill: "CAD_Sangerville_Chat", phone: "207-333-3003" }
+    "Greenville": "CAD_Greenville_Chat",
+    "Monson": "CAD_Monson_Chat",
+    "Sangerville": "CAD_Sangerville_Chat"
   },
 
   "EMMC": {
-    "Brewer": { skill: "EMMC Brewer Chat", phone: "207-444-4001" },
-    "Hampden": { skill: "EMMC Hampden Chat", phone: "207-444-4002" },
-    "Husson Internal Medicine": { skill: "EMMC_Husson_IntMed_Chat", phone: "207-444-4003" },
-    "Husson Family": { skill: "EMMC_Husson_Primary Care_Chat", phone: "207-444-4004" }
+    "Brewer": "EMMC_Brewer_Chat",
+    "Hampden": "EMMC_Hampden_Chat",
+    "Husson Internal Medicine": "EMMC_Husson_IntMed_Chat",
+    "Husson Family": "EMMC_Husson_Primary_Chat"
   },
 
   "Mercy": {
-    "Gorham": { skill: "Mercy_Gorham_Chat", phone: "207-555-5001" },
-    "Portland Internal Medicine": { skill: "Mercy_Portland_IM_Chat", phone: "207-555-5002" },
-    "Yarmouth": { skill: "Mercy_Yarmouth_Chat", phone: "207-555-5003" }
+    "Gorham": "Mercy_Gorham_Chat",
+    "Portland Internal Medicine": "Mercy_Portland_IM_Chat",
+    "South Portland": "Mercy_South_Portland_Chat",
+    "Windham": "Mercy_Windham_Chat",
+    "Yarmouth": "Mercy_Yarmouth_Chat"
   },
 
   "SVH": {
-    "Clinton": { skill: "SVH Clinton Chat", phone: "207-666-6001" },
-    "Unity": { skill: "SVH_Unity_Chat", phone: "207-666-6002" }
+    "Clinton": "SVH_Clinton_Chat",
+    "Newport Plaza": "SVH_Newport_Plaza_Chat",
+    "Unity": "SVH_Unity_Chat"
   },
 
   "NLH Patient Portal": {
-    "Sign up for portal": { skill: "PFHD_Chat", phone: "207-999-9999" }
+    "Sign up for portal": "PFHD_Chat"
   }
 };
 
 /* =========================
-   INIT
+   ORGANIZATION → PHONE (PLACEHOLDERS)
+========================= */
+
+const phoneMap = {
+  "AR Gould": "207-100-0001",
+  "Blue Hill": "207-200-0001",
+  "CA Dean": "207-300-0001",
+  "EMMC": "207-400-0001",
+  "Mercy": "207-500-0001",
+  "SVH": "207-600-0001",
+  "NLH Patient Portal": "207-999-0001"
+};
+
+/* =========================
+   INIT ORGANIZATION DROPDOWN
 ========================= */
 
 window.onload = function () {
@@ -269,7 +365,7 @@ window.onload = function () {
 };
 
 /* =========================
-   PRACTICE
+   PRACTICE LOAD
 ========================= */
 
 function updatePractice() {
@@ -293,7 +389,7 @@ function updatePractice() {
 }
 
 /* =========================
-   CATEGORY
+   CATEGORY LIST (STATIC)
 ========================= */
 
 function updateCategory() {
@@ -307,14 +403,13 @@ function updateCategory() {
         <option>Help with portal</option>
         <option>Become a new patient</option>
         <option>Everything Except Portal</option>
-        <option>Something Else</option>
     `;
 
     showResult();
 }
 
 /* =========================
-   OUTPUT
+   MAIN ROUTING LOGIC (IF CONDITIONS SIMULATED)
 ========================= */
 
 function showResult() {
@@ -325,38 +420,35 @@ function showResult() {
     const box = document.getElementById("result");
 
     if (!org || !practice) {
-        box.innerHTML = "Select Organization and Practice to continue";
+        box.innerHTML = "Select Organization and Practice";
         return;
     }
 
-    const route = data[org][practice];
+    // IF: Organization → Practice → Skill
+    const skill = data[org][practice];
 
-    if (!route) return;
+    // IF: Organization → Phone
+    const phone = phoneMap[org];
 
-    let html = `
-        <div class="badge">${org}</div>
-        <div class="flow">
-            Organization → Practice → Category → Skill Routing
-        </div>
+    let html = "";
 
-        <div class="skill">Skill: ${route.skill}</div>
-    `;
+    html += `<div><b>Organization:</b> ${org}</div>`;
+    html += `<div><b>Practice:</b> ${practice}</div>`;
+    html += `<div class="skill">Skill: ${skill}</div>`;
 
-    if (category === "Something Else") {
-        html += `
-            <div class="phone">📞 Route to Call Center</div>
-            <div class="flow">Phone: ${route.phone}</div>
-        `;
-    } else if (category) {
-        html += `
-            <div class="flow">
-                Category Selected: ${category}
-            </div>
-            <div class="phone">Fallback Phone: ${route.phone}</div>
-        `;
+    // Category logic
+    if (category) {
+        html += `<div class="small">Category Selected: ${category}</div>`;
     } else {
-        html += `<div class="flow">Select Category to complete routing</div>`;
+        html += `<div class="small">Select Category to complete routing logic</div>`;
     }
+
+    // PHONE FIELD (REPLACES “Something Else”)
+    html += `
+        <div class="phone">
+            📞 Contact Number (Based on Organization): ${phone}
+        </div>
+    `;
 
     box.innerHTML = html;
 }
