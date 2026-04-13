@@ -8,26 +8,24 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="styles.css" rel="stylesheet">
 
-
 <style>
 body {
     font-family: Arial, sans-serif;
-    background: #eef2f7;
-    /*padding: 30px;*/
+    background: linear-gradient(135deg, #eef2f7, #f7f9fc);
+    margin: 0;
+    
 }
 
-.container.chat-routing {
-    max-width: 1000px;
+.container.northernlightschatrouting {
+    max-width: 900px;
     margin: auto;
     background: white;
-    padding: 25px;
     border-radius: 14px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-h1 {
-    text-align: center;
-}
+h1 { text-align: center; }
 
 .subtitle {
     text-align: center;
@@ -43,30 +41,31 @@ h1 {
 
 .panel {
     background: #f9fbff;
-    border: 1px solid #e5e9f2;
     padding: 15px;
     border-radius: 10px;
+    border: 1px solid #e5e9f2;
 }
 
 label {
     font-weight: bold;
     font-size: 13px;
     display: block;
-    margin-top: 12px;
+    margin-top: 10px;
 }
 
-select {
+input, select {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     border-radius: 6px;
+    border: 1px solid #ccc;
 }
 
 .output {
     padding: 15px;
-    border-left: 5px solid #2d6cdf;
     background: #fff;
     border-radius: 10px;
+    border-left: 5px solid #2d6cdf;
 }
 
 .skill {
@@ -90,7 +89,6 @@ select {
 </style>
 
 <!--NICE CXoneChat Bsic Chat-->
-
 <script>
 (function(n,u){
     window.CXoneDfo=n,
@@ -104,111 +102,8 @@ cxone('guide','init');
 
 cxone('chat','setCustomCss', '[data-selector="INPUT"] label {text-transform: lowercase !important};');
 </script>
-
 <!--NICE CXoneChat Basic CHat--->
 
-
-
-<!--CUSTOMCSS-->
-<style>
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #eef2f7, #f7f9fc);
-    margin: 0;
-  /*  padding: 30px;*/
-}
-
-.container.customchatrouting {
-    max-width: 900px;
-    margin: auto;
-    background: white;
-    border-radius: 14px;
-    padding: 25px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 5px;
-}
-
-.subtitle {
-    text-align: center;
-    color: #666;
-    margin-bottom: 20px;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.panel {
-    background: #f9fbff;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #e5e9f2;
-}
-
-label {
-    font-weight: bold;
-    font-size: 13px;
-    display: block;
-    margin-top: 10px;
-}
-
-select {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.output {
-    margin-top: 10px;
-    padding: 15px;
-    background: #ffffff;
-    border-radius: 10px;
-    border-left: 5px solid #2d6cdf;
-}
-
-.badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    background: #e7f0ff;
-    color: #2d6cdf;
-    margin-top: 5px;
-}
-
-.skill {
-    font-size: 18px;
-    font-weight: bold;
-    color: #1a3f9f;
-    margin-top: 10px;
-}
-
-.phone {
-    color: #b00020;
-    font-weight: bold;
-    margin-top: 8px;
-}
-
-.flow {
-    font-size: 13px;
-    color: #666;
-    margin-top: 10px;
-    line-height: 1.5;
-}
-
-.header-box {
-    text-align: center;
-    margin-bottom: 20px;
-}
-</style>
 
 <!--CUSTOMCSS FOR CHAT ROUTING CONFIGRATION-->
 </head>
@@ -245,15 +140,22 @@ select {
 
 
 <div id="lipsum">
-<div class="container chat-routing">
+<div class="container northernlightschatrouting ">
 
-<h1>Northern Light Health Precontact Survey Conditions</h1>
-<div class="subtitle">Org → Practice → Category → Skill + Dynamic Phone (Org-based)</div>
+<h1>CXone Chat Routing Demo</h1>
+<div class="subtitle">Pre-contact Survey Simulation</div>
 
 <div class="grid">
 
 <!-- INPUT -->
 <div class="panel">
+<h3>Input</h3>
+
+<label>Full Name *</label>
+<input type="text" id="name" placeholder="Enter full name">
+
+<label>Date of Birth *</label>
+<input type="date" id="dob">
 
 <label>Organization</label>
 <select id="org" onchange="updatePractice()">
@@ -266,9 +168,12 @@ select {
 </select>
 
 <label>Category / Reason</label>
-<select id="category" onchange="showResult()">
+<select id="category" onchange="updatePhone(); showResult();">
     <option value="">-- Select Category --</option>
 </select>
+
+<label>Contact Number (Based on Organization)</label>
+<input type="text" id="phone" readonly placeholder="Will auto-populate">
 
 </div>
 
@@ -277,7 +182,7 @@ select {
 <h3>Routing Output</h3>
 
 <div id="result" class="output">
-Select values to see routing result
+Complete required fields to see routing
 </div>
 
 </div>
@@ -288,7 +193,7 @@ Select values to see routing result
 <script>
 
 /* =========================
-   FULL DATASET (ORGANIZATION → PRACTICE → SKILL)
+   DATA
 ========================= */
 
 const data = {
@@ -296,7 +201,7 @@ const data = {
     "Fort Fairfield": "ARG_Pri_Care_FtFairfield_Chat",
     "Presque Isle": "ARG_Pri_Care_PresqueIsle_Chat",
     "Caribou": "ARG_Pri_Care_Caribou_Chat",
-    "Women’s Health": "ARG_Womens_Health_Chat"
+    "Womens Health": "ARG_Womens_Health_Chat"
   },
 
   "Blue Hill": {
@@ -311,22 +216,16 @@ const data = {
 
   "EMMC": {
     "Brewer": "EMMC_Brewer_Chat",
-    "Hampden": "EMMC_Hampden_Chat",
-    "Husson Internal Medicine": "EMMC_Husson_IntMed_Chat",
-    "Husson Family": "EMMC_Husson_Primary_Chat"
+    "Hampden": "EMMC_Hampden_Chat"
   },
 
   "Mercy": {
     "Gorham": "Mercy_Gorham_Chat",
-    "Portland Internal Medicine": "Mercy_Portland_IM_Chat",
-    "South Portland": "Mercy_South_Portland_Chat",
-    "Windham": "Mercy_Windham_Chat",
     "Yarmouth": "Mercy_Yarmouth_Chat"
   },
 
   "SVH": {
     "Clinton": "SVH_Clinton_Chat",
-    "Newport Plaza": "SVH_Newport_Plaza_Chat",
     "Unity": "SVH_Unity_Chat"
   },
 
@@ -336,21 +235,21 @@ const data = {
 };
 
 /* =========================
-   ORGANIZATION → PHONE (PLACEHOLDERS)
+   PHONE PLACEHOLDERS (ORG LEVEL)
 ========================= */
 
 const phoneMap = {
-  "AR Gould": "207-100-0001",
-  "Blue Hill": "207-200-0001",
-  "CA Dean": "207-300-0001",
-  "EMMC": "207-400-0001",
-  "Mercy": "207-500-0001",
-  "SVH": "207-600-0001",
-  "NLH Patient Portal": "207-999-0001"
+  "AR Gould": "1111",
+  "Blue Hill": "2222",
+  "CA Dean": "3333",
+  "EMMC": "4444",
+  "Mercy": "5555",
+  "SVH": "6666",
+  "NLH Patient Portal": "9999"
 };
 
 /* =========================
-   INIT ORGANIZATION DROPDOWN
+   INIT
 ========================= */
 
 window.onload = function () {
@@ -365,7 +264,7 @@ window.onload = function () {
 };
 
 /* =========================
-   PRACTICE LOAD
+   PRACTICE
 ========================= */
 
 function updatePractice() {
@@ -385,11 +284,12 @@ function updatePractice() {
         practice.appendChild(opt);
     });
 
+    updatePhone();
     showResult();
 }
 
 /* =========================
-   CATEGORY LIST (STATIC)
+   CATEGORY
 ========================= */
 
 function updateCategory() {
@@ -409,52 +309,61 @@ function updateCategory() {
 }
 
 /* =========================
-   MAIN ROUTING LOGIC (IF CONDITIONS SIMULATED)
+   PHONE (ORG BASED ONLY)
+========================= */
+
+function updatePhone() {
+    const org = document.getElementById("org").value;
+    const phoneField = document.getElementById("phone");
+
+    if (org && phoneMap[org]) {
+        phoneField.value = phoneMap[org];
+    } else {
+        phoneField.value = "";
+    }
+}
+
+/* =========================
+   OUTPUT
 ========================= */
 
 function showResult() {
+    const name = document.getElementById("name").value;
+    const dob = document.getElementById("dob").value;
     const org = document.getElementById("org").value;
     const practice = document.getElementById("practice").value;
     const category = document.getElementById("category").value;
 
     const box = document.getElementById("result");
 
+    if (!name || !dob) {
+        box.innerHTML = "Full Name and Date of Birth are required";
+        return;
+    }
+
     if (!org || !practice) {
         box.innerHTML = "Select Organization and Practice";
         return;
     }
 
-    // IF: Organization → Practice → Skill
     const skill = data[org][practice];
 
-    // IF: Organization → Phone
-    const phone = phoneMap[org];
-
-    let html = "";
-
-    html += `<div><b>Organization:</b> ${org}</div>`;
-    html += `<div><b>Practice:</b> ${practice}</div>`;
-    html += `<div class="skill">Skill: ${skill}</div>`;
-
-    // Category logic
-    if (category) {
-        html += `<div class="small">Category Selected: ${category}</div>`;
-    } else {
-        html += `<div class="small">Select Category to complete routing logic</div>`;
-    }
-
-    // PHONE FIELD (REPLACES “Something Else”)
-    html += `
-        <div class="phone">
-            📞 Contact Number (Based on Organization): ${phone}
-        </div>
+    let html = `
+        <div><b>Name:</b> ${name}</div>
+        <div><b>DOB:</b> ${dob}</div>
+        <div><b>Organization:</b> ${org}</div>
+        <div><b>Practice:</b> ${practice}</div>
+        <div class="skill">Skill: ${skill}</div>
     `;
+
+    if (category) {
+        html += `<div class="small">Category: ${category}</div>`;
+    }
 
     box.innerHTML = html;
 }
 
 </script>
-
 
 </div>
 
