@@ -59,21 +59,311 @@ cxone('chat','setCustomCss', '[data-selector="INPUT"] label {text-transform: low
 
 
 <div id="lipsum">
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur consectetur nec ex vel ornare. Ut sed nisl vel velit iaculis tincidunt non a mi. Pellentesque gravida eget enim vitae egestas. Sed neque felis, rutrum ut turpis in, blandit malesuada augue. Donec vulputate blandit elit scelerisque lobortis. Maecenas aliquam dolor nisi, eget maximus lacus aliquam pharetra. Suspendisse varius orci non pretium posuere. Aliquam et auctor quam. Integer posuere at mauris eget ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse metus enim, euismod eget eros a, pharetra convallis dolor. Nulla sagittis tempor suscipit. Sed dignissim, urna eu pharetra rhoncus, sapien tortor faucibus diam, nec eleifend ipsum augue sed velit. Nullam sit amet vestibulum elit. Mauris maximus, mi sed tincidunt tincidunt, dui turpis finibus urna, ac mattis lacus tortor sit amet eros.
-</p>
-<p>
-Proin vel magna aliquet, laoreet elit in, ultrices sapien. Fusce ornare sem eget mi dictum efficitur. Donec convallis quis sapien a gravida. Nulla egestas viverra ligula vitae congue. In sed nibh non turpis laoreet tempor vel convallis enim. Fusce convallis ipsum massa. Sed tempus felis eu vehicula posuere. Ut dignissim, sem id vehicula pharetra, velit leo faucibus nibh, vitae tincidunt velit tellus sed libero. Donec rhoncus, quam ac vehicula convallis, eros eros convallis tortor, ac auctor neque odio condimentum magna. Cras varius vehicula posuere. Pellentesque elementum eros at nibh sagittis hendrerit. Praesent mollis, justo nec mattis dignissim, ipsum arcu rhoncus leo, aliquam convallis dui risus in augue. Cras quis rhoncus mauris. Morbi mattis libero sit amet turpis auctor, eget commodo lectus lacinia.
-</p>
-<p>
-Interdum et malesuada fames ac ante ipsum primis in faucibus. Ut lobortis, nunc id maximus cursus, nulla lorem mattis nisi, nec venenatis dui dolor sed leo. Aenean vitae turpis ut felis pharetra placerat nec et dui. Etiam rhoncus dolor risus, nec ullamcorper ipsum convallis et. Suspendisse nec mattis mi, non auctor felis. Nulla ac urna efficitur odio sagittis molestie eget id dui. Donec vel massa hendrerit, sagittis tellus et, rhoncus leo. Etiam diam ligula, pulvinar quis dapibus non, blandit a metus. Nam fringilla a arcu non sollicitudin. Nullam in lacus sed quam efficitur aliquet. Morbi nec metus lobortis, luctus tortor vel, pharetra ipsum.
-</p>
-<p>
-Aliquam volutpat commodo fringilla. Pellentesque pretium aliquam massa tempus dictum. Vivamus imperdiet tempus turpis et bibendum. Morbi et interdum mi. Praesent nisl massa, sodales ac euismod a, finibus at quam. Praesent ac turpis non lacus rutrum consequat id in felis. Praesent lacinia, sapien vitae ornare dictum, tellus ipsum hendrerit mi, et varius nisi neque ut tortor. Phasellus nec ante lectus. Vestibulum volutpat, nibh ut consectetur pellentesque, nisl augue consectetur neque, in tempus velit ante sit amet orci. Vestibulum sed ultricies orci. Nullam eget nibh ut enim molestie sodales. Suspendisse lobortis eleifend sem ac mattis.
-</p>
-<p>
-Curabitur ultrices ut elit eu venenatis. Etiam molestie mi vitae felis porttitor, sit amet tempus lorem aliquam. Vivamus tincidunt orci ac sem sollicitudin sollicitudin. Vivamus lacinia diam facilisis cursus varius. Mauris nisl massa, finibus sit amet lectus sed, imperdiet malesuada elit. Quisque mattis nisl diam, vel consectetur lectus vulputate at. Aenean efficitur imperdiet faucibus. Aenean auctor rutrum sagittis.
-</p></div>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #eef2f7, #f7f9fc);
+    margin: 0;
+    padding: 30px;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: #f9fbff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e5e9f2;
+}
+
+label {
+    font-weight: bold;
+    font-size: 13px;
+    display: block;
+    margin-top: 10px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.output {
+    margin-top: 10px;
+    padding: 15px;
+    background: #ffffff;
+    border-radius: 10px;
+    border-left: 5px solid #2d6cdf;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #e7f0ff;
+    color: #2d6cdf;
+    margin-top: 5px;
+}
+
+.skill {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a3f9f;
+    margin-top: 10px;
+}
+
+.phone {
+    color: #b00020;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.flow {
+    font-size: 13px;
+    color: #666;
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.header-box {
+    text-align: center;
+    margin-bottom: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header-box">
+<h1>CXone Chat Routing Configuration Demo</h1>
+<div class="subtitle">Interactive preview of Organization → Practice → Category → Skill routing</div>
+</div>
+
+<div class="grid">
+
+<!-- LEFT SIDE -->
+<div class="panel">
+<h3>Input Selection</h3>
+
+<label>Organization</label>
+<select id="org" onchange="updatePractice()">
+    <option value="">-- Select Organization --</option>
+</select>
+
+<label>Practice</label>
+<select id="practice" onchange="updateCategory()">
+    <option value="">-- Select Practice --</option>
+</select>
+
+<label>Category / Reason</label>
+<select id="category" onchange="showResult()">
+    <option value="">-- Select Category --</option>
+</select>
+
+</div>
+
+<!-- RIGHT SIDE -->
+<div class="panel">
+<h3>Routing Output</h3>
+
+<div id="result" class="output">
+Select values to see routing result
+</div>
+
+</div>
+
+</div>
+</div>
+
+<script>
+
+/* =========================
+   DATA MODEL (CXone Mapping)
+========================= */
+
+const data = {
+  "AR Gould": {
+    "Fort Fairfield": { skill: "ARG_Pri_Care_FtFairfield_Chat", phone: "207-111-1001" },
+    "Presque Isle": { skill: "ARG_Pri_Care_PresqueIsle_Chat", phone: "207-111-1002" },
+    "Caribou": { skill: "ARG_Pri_Care_Caribou_Chat", phone: "207-111-1003" },
+    "Women’s Health": { skill: "ARG_Womens_Health_Chat", phone: "207-111-1004" }
+  },
+
+  "Blue Hill": {
+    "Blue Hill": { skill: "BHH_BlueHill_Chat", phone: "207-222-2001" }
+  },
+
+  "CA Dean": {
+    "Greenville": { skill: "CAD_Greenville_Chat", phone: "207-333-3001" },
+    "Monson": { skill: "CAD_Monson_Chat", phone: "207-333-3002" },
+    "Sangerville": { skill: "CAD_Sangerville_Chat", phone: "207-333-3003" }
+  },
+
+  "EMMC": {
+    "Brewer": { skill: "EMMC Brewer Chat", phone: "207-444-4001" },
+    "Hampden": { skill: "EMMC Hampden Chat", phone: "207-444-4002" },
+    "Husson Internal Medicine": { skill: "EMMC_Husson_IntMed_Chat", phone: "207-444-4003" },
+    "Husson Family": { skill: "EMMC_Husson_Primary Care_Chat", phone: "207-444-4004" }
+  },
+
+  "Mercy": {
+    "Gorham": { skill: "Mercy_Gorham_Chat", phone: "207-555-5001" },
+    "Portland Internal Medicine": { skill: "Mercy_Portland_IM_Chat", phone: "207-555-5002" },
+    "Yarmouth": { skill: "Mercy_Yarmouth_Chat", phone: "207-555-5003" }
+  },
+
+  "SVH": {
+    "Clinton": { skill: "SVH Clinton Chat", phone: "207-666-6001" },
+    "Unity": { skill: "SVH_Unity_Chat", phone: "207-666-6002" }
+  },
+
+  "NLH Patient Portal": {
+    "Sign up for portal": { skill: "PFHD_Chat", phone: "207-999-9999" }
+  }
+};
+
+/* =========================
+   INIT
+========================= */
+
+window.onload = function () {
+    const org = document.getElementById("org");
+
+    Object.keys(data).forEach(o => {
+        let opt = document.createElement("option");
+        opt.value = o;
+        opt.textContent = o;
+        org.appendChild(opt);
+    });
+};
+
+/* =========================
+   PRACTICE
+========================= */
+
+function updatePractice() {
+    const org = document.getElementById("org").value;
+    const practice = document.getElementById("practice");
+    const category = document.getElementById("category");
+
+    practice.innerHTML = "<option value=''>-- Select Practice --</option>";
+    category.innerHTML = "<option value=''>-- Select Category --</option>";
+
+    if (!org) return;
+
+    Object.keys(data[org]).forEach(p => {
+        let opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = p;
+        practice.appendChild(opt);
+    });
+
+    showResult();
+}
+
+/* =========================
+   CATEGORY
+========================= */
+
+function updateCategory() {
+    const category = document.getElementById("category");
+
+    category.innerHTML = `
+        <option value="">-- Select Category --</option>
+        <option>Scheduling / Appointment</option>
+        <option>Office Information</option>
+        <option>Update my Information</option>
+        <option>Help with portal</option>
+        <option>Become a new patient</option>
+        <option>Everything Except Portal</option>
+        <option>Something Else</option>
+    `;
+
+    showResult();
+}
+
+/* =========================
+   OUTPUT
+========================= */
+
+function showResult() {
+    const org = document.getElementById("org").value;
+    const practice = document.getElementById("practice").value;
+    const category = document.getElementById("category").value;
+
+    const box = document.getElementById("result");
+
+    if (!org || !practice) {
+        box.innerHTML = "Select Organization and Practice to continue";
+        return;
+    }
+
+    const route = data[org][practice];
+
+    if (!route) return;
+
+    let html = `
+        <div class="badge">${org}</div>
+        <div class="flow">
+            Organization → Practice → Category → Skill Routing
+        </div>
+
+        <div class="skill">Skill: ${route.skill}</div>
+    `;
+
+    if (category === "Something Else") {
+        html += `
+            <div class="phone">📞 Route to Call Center</div>
+            <div class="flow">Phone: ${route.phone}</div>
+        `;
+    } else if (category) {
+        html += `
+            <div class="flow">
+                Category Selected: ${category}
+            </div>
+            <div class="phone">Fallback Phone: ${route.phone}</div>
+        `;
+    } else {
+        html += `<div class="flow">Select Category to complete routing</div>`;
+    }
+
+    box.innerHTML = html;
+}
+
+</script>
+
+
+</div>
 
 
 </section>
