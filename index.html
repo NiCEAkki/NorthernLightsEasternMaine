@@ -162,7 +162,7 @@ cxone('chat','setCustomCss', '[data-selector="INPUT"] label {text-transform: low
 </select>
 
 <label>Category / Reason</label>
-<select id="category" onchange="updatePhone(); showResult();">
+<select id="category" onchange="showResult(); updatePhone();">
     <option value="">-- Select Category --</option>
 </select>
 
@@ -187,7 +187,7 @@ Complete required fields to see routing
 <script>
 
 /* =========================
-   DATA
+   DATA (ORG → PRACTICE → SKILL)
 ========================= */
 
 const data = {
@@ -210,16 +210,31 @@ const data = {
 
   "EMMC": {
     "Brewer": "EMMC_Brewer_Chat",
-    "Hampden": "EMMC_Hampden_Chat"
+    "Hampden": "EMMC_Hampden_Chat",
+    "Husson Internal Medicine": "EMMC_Husson_IntMed_Chat",
+    "Husson Family": "EMMC_Husson_Primary Care_Chat"
+  },
+
+  "Maine Coast": {
+    "Ellsworth Pediatrics": "Ellsworth Pediatrics Chat",
+    "Ellsworth Primary Care": "Maine Coast Chat"
   },
 
   "Mercy": {
     "Gorham": "Mercy_Gorham_Chat",
+    "Harry E Davis Pediatrics": "Mercy_Harry_E_Davis_Peds_Chat",
+    "Portland Internal Medicine": "Mercy_Portland_IM_Chat",
+    "South Portland": "Mercy_South_Portland_Chat",
+    "West Falmouth": "Mercy_West_Falmouth_Chat",
+    "Windham": "Mercy_Windham_Chat",
     "Yarmouth": "Mercy_Yarmouth_Chat"
   },
 
   "SVH": {
     "Clinton": "SVH_Clinton_Chat",
+    "Newport Plaza": "SVH_Newport_Plaza_Chat",
+    "Newport Triangle": "SVH_Newport_Triangle_Chat",
+    "Pittsfield": "SVH_Pittsfield_Chat",
     "Unity": "SVH_Unity_Chat"
   },
 
@@ -229,7 +244,7 @@ const data = {
 };
 
 /* =========================
-   PHONE PLACEHOLDERS (ORG LEVEL)
+   PHONE MAP
 ========================= */
 
 const phoneMap = {
@@ -237,13 +252,26 @@ const phoneMap = {
   "Blue Hill": "2222",
   "CA Dean": "3333",
   "EMMC": "4444",
-  "Mercy": "5555",
-  "SVH": "6666",
+  "Maine Coast": "5555",
+  "Mercy": "6666",
+  "SVH": "7777",
   "NLH Patient Portal": "9999"
 };
 
 /* =========================
-   INIT
+   CATEGORIES (FINAL MODEL)
+========================= */
+
+const categories = [
+  "Scheduling / Assistant",
+  "Office Information",
+  "Update My Information",
+  "Become a New Patient",
+  "Something Else"
+];
+
+/* =========================
+   INIT ORGANIZATION
 ========================= */
 
 window.onload = function () {
@@ -258,7 +286,7 @@ window.onload = function () {
 };
 
 /* =========================
-   PRACTICE
+   PRACTICE UPDATE
 ========================= */
 
 function updatePractice() {
@@ -283,42 +311,38 @@ function updatePractice() {
 }
 
 /* =========================
-   CATEGORY
+   CATEGORY UPDATE
 ========================= */
 
 function updateCategory() {
+    const org = document.getElementById("org").value;
     const category = document.getElementById("category");
 
-    category.innerHTML = `
-        <option value="">-- Select Category --</option>
-        <option>Scheduling / Appointment</option>
-        <option>Office Information</option>
-        <option>Update my Information</option>
-        <option>Help with portal</option>
-        <option>Become a new patient</option>
-        <option>Everything Except Portal</option>
-    `;
+    category.innerHTML = "<option value=''>-- Select Category --</option>";
 
-    showResult();
+    // PORTAL SPECIAL FLOW
+    if (org === "NLH Patient Portal") {
+        category.innerHTML += `<option value="Portal">Portal</option>`;
+        return;
+    }
+
+    // STANDARD FLOW
+    categories.forEach(c => {
+        category.innerHTML += `<option value="${c}">${c}</option>`;
+    });
 }
 
 /* =========================
-   PHONE (ORG BASED ONLY)
+   PHONE UPDATE
 ========================= */
 
 function updatePhone() {
     const org = document.getElementById("org").value;
-    const phoneField = document.getElementById("phone");
-
-    if (org && phoneMap[org]) {
-        phoneField.value = phoneMap[org];
-    } else {
-        phoneField.value = "";
-    }
+    document.getElementById("phone").value = phoneMap[org] || "";
 }
 
 /* =========================
-   OUTPUT
+   OUTPUT + ROUTING
 ========================= */
 
 function showResult() {
@@ -350,15 +374,32 @@ function showResult() {
         <div class="skill">Skill: ${skill}</div>
     `;
 
+    /* =========================
+       ROUTING RULES
+    ========================= */
+
     if (category) {
-        html += `<div class="small">Category: ${category}</div>`;
+
+        // PORTAL ONLY FLOW
+        if (org === "NLH Patient Portal") {
+            html += `<div class="skill">Portal Routing: PFHD_Chat</div>`;
+        }
+
+        // SOMETHING ELSE RULE
+        else if (category === "Something Else") {
+            html += `<div class="small">Routing: Display phone number only</div>`;
+        }
+
+        // STANDARD ROUTING
+        else {
+            html += `<div class="small">Category: ${category}</div>`;
+        }
     }
 
     box.innerHTML = html;
 }
 
 </script>
-
 </div>
 
 
